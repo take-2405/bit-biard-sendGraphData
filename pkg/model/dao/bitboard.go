@@ -2,12 +2,10 @@ package dao
 
 import (
 	"bit-board/pkg/model/dto"
-	"errors"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"log"
-	"math"
 	"strconv"
 	"time"
 )
