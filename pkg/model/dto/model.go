@@ -5,12 +5,18 @@ type ErrorResponse struct{
 }
 
 type Response struct{
-	Graph       []Graph `json:"graph"`
+	Label []string     `json:"label"`
+	Rate      []float64 `json:"rate"`
 	Timestamp   int     `json:"timestamp"`
 	NowRate     float64 `json:"nowRate"`
 }
 
 type Graph struct{
+	Label string     `json:"timestamp"`
+	Rate      float64 `json:"rate"`
+}
+
+type GraphTable struct{
 	Timestamp int     `json:"timestamp"`
 	Rate      float64 `json:"rate"`
 }

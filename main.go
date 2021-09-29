@@ -18,10 +18,15 @@ func handler() (events.APIGatewayProxyResponse,error) {
 		return view.ReturnInternalServerErrorResponse(err)
 	}
 
-	response.Graph,err=client.BitBorad.BitBoardLogic.GetGraphData()
+	Graph,err:=client.BitBorad.BitBoardLogic.GetGraphData()
 	if err != nil {
 		log.Println(err)
 		return view.ReturnInternalServerErrorResponse(err)
+	}
+
+	for _,j:=range Graph {
+		response.Rate=append(response.Rate,j.Rate)
+		response.Label=append(response.Label,j.Label)
 	}
 
 	nowRate,err:= dao.GetNowRate()
