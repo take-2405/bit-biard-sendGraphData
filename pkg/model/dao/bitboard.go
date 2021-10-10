@@ -44,7 +44,7 @@ func (r *bitBoardMethods)GetGraphData()([]dto.Graph,error){
 				N: aws.String(strconv.FormatInt(time.Now().Unix(), 10)),
 			},
 		},
-		ScanIndexForward:       aws.Bool(true), // ソートキーのソート順（指定しないと昇順）
+		ScanIndexForward:       aws.Bool(false), // ソートキーのソート順（指定しないと昇順）
 		KeyConditionExpression: aws.String("#ID = :ID AND #timestamp <= :timestamp"), // 検索条件
 		Limit: aws.Int64(20),
 	}

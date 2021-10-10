@@ -23,11 +23,11 @@ func handler() (events.APIGatewayProxyResponse,error) {
 		log.Println(err)
 		return view.ReturnInternalServerErrorResponse(err)
 	}
-
-	for _,j:=range Graph {
-		response.Rate=append(response.Rate,j.Rate)
-		response.Label=append(response.Label,j.Label)
+	for i := len(Graph)-1;i>=0;i--{
+		response.Rate=append(response.Rate,Graph[i].Rate)
+		response.Label=append(response.Label,Graph[i].Label)
 	}
+
 
 	nowRate,err:= dao.GetNowRate()
 	if err != nil {
