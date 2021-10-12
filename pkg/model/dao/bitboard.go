@@ -27,8 +27,9 @@ func newBitBoardClient(client *dynamodb.DynamoDB) methods {
 
 func (r *bitBoardMethods)GetGraphData()([]dto.Graph,error){
 	var err error
-	var graph []dto.Graph
-	var item dto.Graph
+	var graphs []dto.Graph
+	var graph dto.Graph
+	var item dto.GraphTable
 	getParam := &dynamodb.QueryInput{
 		TableName: aws.String("GraphBTC"),
 		ExpressionAttributeNames: map[string]*string{
@@ -51,17 +52,19 @@ func (r *bitBoardMethods)GetGraphData()([]dto.Graph,error){
 	results, err := r.Client.Query(getParam)
 	if err != nil {
 		log.Println(err)
-		return 	graph,err
+		return 	graphs,err
 	}
 
 	for _,j := range results.Items {
 		err = dynamodbattribute.UnmarshalMap(j, &item)
 		if err != nil {
 			log.Println(err)
-			return 	graph,err
+			return 	graphs,err
 		}
-		graph = append(graph,item)
+		t:=time.Unix(int64(item.Timestamp),0)
+		graph.Label=strconv.Itoa(int(t.Month()))+"/"+strconv.Itoa(t.Day())
+		graph.Rate=item.Rate
+		graphs = append(graphs,graph)
 	}
-
-	return graph,err
+	return graphs,err
 }
